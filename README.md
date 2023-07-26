@@ -1,1 +1,0 @@
-# event-organising-app
