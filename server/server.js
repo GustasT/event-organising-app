@@ -1,10 +1,20 @@
 const express = require("express");
+require("dotenv").config();
+const usersRoutes = require("./routes/users.js");
 
 const app = express();
-const port = 5001;
 
-app.get("/api", (req, res) => {
-  res.json({ users: ["userOne", "userTwo", "userThree"] });
+// Middlewares
+app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(req.path, req.method);
+  next();
 });
 
-app.listen(port, () => console.log(`Application started on port ${port}`));
+// Routes
+app.use("/api/users", usersRoutes);
+
+app.listen(process.env.PORT, () =>
+  console.log(`Application started on port ${process.env.PORT}`)
+);
