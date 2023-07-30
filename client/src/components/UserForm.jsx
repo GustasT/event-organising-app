@@ -7,7 +7,7 @@ const StyledForm = styled.form`
   max-width: 350px;
 `;
 
-export const RegistrationForm = () => {
+export const UserForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
   };

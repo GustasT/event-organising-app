@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { UserList } from "./components/userList/UserList";
-import { RegistrationForm } from "./components/registrationForm/RegistrationForm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import { Navbar } from "./components/Navbar";
+import { Container } from "./components/Container";
+import GlobalStyles from "./globalStyles/GlobalStyles";
 
 function App() {
   return (
-    <div>
-      App
-      <RegistrationForm />
-      <UserList />
+    <div className="App">
+      <GlobalStyles />
+      <BrowserRouter>
+        <Navbar />
+        <Container>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
     </div>
   );
 }
