@@ -1,7 +1,5 @@
-const express = require("express");
 const User = require("../models/user.model.js");
 const { MongoClient, ObjectId } = require("mongodb");
-// const router = express.Router();
 
 const getUsers = async (req, res) => {
   const client = await new MongoClient("mongodb://localhost:27017").connect();
@@ -13,17 +11,6 @@ const getUsers = async (req, res) => {
   await client.close();
   res.send(users);
 };
-
-// router.get("/", async (req, res) => {
-//   const client = await new MongoClient("mongodb://localhost:27017").connect();
-//   const usersArray = await client
-//     .db("EventOrganisingApp")
-//     .collection("users")
-//     .find({})
-//     .toArray();
-//   await client.close();
-//   res.send(usersArray);
-// });
 
 const getUser = async (req, res) => {
   const { id } = req.params;
@@ -46,7 +33,7 @@ const getUser = async (req, res) => {
 const createUser = async (req, res) => {
   const { firstName, lastName, email, birthday } = req.body;
 
-  console.log("Request body:", req.body); // Try using console.error()
+  // console.log("Request body:", req.body);
 
   const newUser = new User(firstName, lastName, email, birthday);
 
@@ -54,7 +41,7 @@ const createUser = async (req, res) => {
   await client.db("EventOrganisingApp").collection("users").insertOne(newUser);
   await client.close();
 
-  res.status(201).send(`User ${firstName} added successfully`);
+  res.status(201).json(newUser);
 };
 
 const patchUser = async (req, res) => {

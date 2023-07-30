@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useUsersContext } from "../../hooks/useUsersContext";
 
 const StyledForm = styled.form`
   display: flex;
@@ -8,6 +9,7 @@ const StyledForm = styled.form`
 `;
 
 export const UserForm = () => {
+  const { dispatch } = useUsersContext();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +28,20 @@ export const UserForm = () => {
       },
     });
     const json = await response.json();
+
+    console.log("Server response:", json); // Log the response
+
+    if (!response.ok) {
+      console.log("kazkas neveikia");
+    }
+    if (response.ok) {
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setBirthday("");
+      console.log("new user added", json);
+      dispatch({ type: "CREATE_USER", payload: json });
+    }
   };
 
   return (
