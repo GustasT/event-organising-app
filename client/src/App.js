@@ -11,11 +11,10 @@ function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Navbar />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </Container>
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

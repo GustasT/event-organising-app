@@ -4,6 +4,7 @@ import { Container } from "./Container";
 import { styled } from "styled-components";
 
 const StyledNavbar = styled.header`
+  background-color: #d1e5f4;
   .container {
     display: flex;
     align-items: center;
@@ -12,7 +13,7 @@ const StyledNavbar = styled.header`
 
   a {
     text-decoration: none;
-    color: black;
+    color: gray;
   }
 `;
 

@@ -1,5 +1,6 @@
 const User = require("../models/user.model.js");
 const { MongoClient, ObjectId } = require("mongodb");
+const mongoose = require("mongoose");
 
 const getUsers = async (req, res) => {
   const client = await new MongoClient("mongodb://localhost:27017").connect();
@@ -15,6 +16,10 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
   const { id } = req.params;
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid user ID format" });
+  }
+
   const client = await new MongoClient("mongodb://localhost:27017").connect();
   const user = await client
     .db("EventOrganisingApp")
@@ -24,7 +29,7 @@ const getUser = async (req, res) => {
   await client.close();
 
   if (!user) {
-    return res.status(404).send("User not found");
+    return res.status(404).json({ error: "user does not exist" });
   }
 
   res.status(200).send(user);
@@ -47,16 +52,20 @@ const createUser = async (req, res) => {
 const patchUser = async (req, res) => {
   const { id } = req.params;
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid user ID format" });
+  }
+
   const client = await new MongoClient("mongodb://localhost:27017").connect();
   const user = await client
     .db("EventOrganisingApp")
     .collection("users")
-    .updateOne({ _id: new ObjectId(id) }, { $set: req.body });
+    .findOneAndUpdate({ _id: new ObjectId(id) }, { $set: req.body });
 
   await client.close();
 
   if (!user) {
-    return res.status(404).send("User not found");
+    return res.status(404).json({ error: "user does not exist" });
   }
 
   res.status(200).send(user);
@@ -64,14 +73,24 @@ const patchUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "Invalid user ID format" });
+  }
+
   const client = await new MongoClient("mongodb://localhost:27017").connect();
-  await client
+  const user = await client
     .db("EventOrganisingApp")
     .collection("users")
-    .deleteOne({ _id: new ObjectId(id) });
+    .findOneAndDelete({ _id: new ObjectId(id) });
 
   await client.close();
-  res.status(200).send(`User with id: ${id} deleted`);
+
+  if (!user) {
+    return res.status(404).json({ error: "user does not exist" });
+  }
+
+  res.status(200).json(user);
 };
 
 module.exports = {

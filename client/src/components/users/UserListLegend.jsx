@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 
 const StyledUserListLegend = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
   text-align: center;
   margin: 10px auto;
   word-wrap: break-word;
@@ -18,6 +18,9 @@ const StyledUserListLegend = styled.div`
   :first-child {
     border-left: 1px solid lightgray;
   }
+  :last-child {
+    border-right: 1px solid lightgray;
+  }
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -31,6 +34,7 @@ export const UserListLegend = () => {
       <p>Last Name</p>
       <p>Email</p>
       <p>Birthday</p>
+      <p>Actions</p>
     </StyledUserListLegend>
   );
 };

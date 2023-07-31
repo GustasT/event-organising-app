@@ -6,6 +6,15 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   max-width: 350px;
+  gap: 0.5rem;
+
+  input {
+    height: 1.5rem;
+  }
+
+  button {
+    height: 1.5rem;
+  }
 `;
 
 export const UserForm = () => {
@@ -29,7 +38,7 @@ export const UserForm = () => {
     });
     const json = await response.json();
 
-    console.log("Server response:", json); // Log the response
+    console.log("Server response:", json);
 
     if (!response.ok) {
       console.log("kazkas neveikia");
